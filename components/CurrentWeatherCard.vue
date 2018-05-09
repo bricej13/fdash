@@ -20,7 +20,9 @@
     name: "CurrentWeatherCard",
     components: {StatsCard},
     created: function () {
-      this.$store.dispatch('weather/load');
+      setInterval(function() {
+        this.$store.dispatch('weather/load');
+      }, 900000)
     }
   }
 </script>

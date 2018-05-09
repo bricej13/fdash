@@ -35,6 +35,10 @@
         type: String,
         default: 'Chart title'
       },
+      dataLoaded: {
+        type: Boolean,
+        default: true // Line | Pie | Bar
+      },
       chartType: {
         type: String,
         default: 'Line' // Line | Pie | Bar
@@ -80,9 +84,16 @@
         return Math.floor(Math.random() * (max - min + 1)) + min
       }
     },
-    mounted () {
-      this.updateChartId()
-      this.$nextTick(this.initChart)
+    watch: {
+      dataLoaded: {
+        immediate: true,
+        handler: function (val) {
+          if (val) {
+            this.updateChartId()
+            this.$nextTick(this.initChart)
+          }
+        }
+      }
     }
   }
 

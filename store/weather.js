@@ -1,5 +1,6 @@
 export const state = () => ({
   location: "",
+  updated: null,
   current: {},
   forecast: [],
   units: {}
@@ -17,6 +18,9 @@ export const mutations = {
   },
   setForecast(state, forecast) {
     state.forecast = forecast;
+  },
+  updateUpdated(state) {
+    state.updated = new Date().toLocaleString();
   }
 };
 
@@ -38,6 +42,7 @@ export const actions = {
           context.commit('setUnits', d.data.query.results.channel.units);
           context.commit('setCurrent', current);
           context.commit('setForecast', d.data.query.results.channel.item.forecast);
+          context.commit('updateUpdated');
         }
       )
 

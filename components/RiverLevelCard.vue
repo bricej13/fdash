@@ -20,7 +20,9 @@
     name: "RiverLevelCard",
     components: {StatsCard},
     created: function () {
-      this.$store.dispatch('river/load');
+      setInterval(function() {
+        this.$store.dispatch('river/load');
+      }, 21600000)
     }
   }
 </script>

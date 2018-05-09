@@ -6,16 +6,16 @@
       <div class="col-lg-3 col-sm-6">
         <river-level-card></river-level-card>
       </div>
-      <div class="col-lg-3 col-sm-6">
-        <current-weather-card></current-weather-card>
-      </div>
     </div>
 
-    <!--Charts-->
-      <div class="row">
-
-
+    <div class="row">
+      <div class="col-lg-3 col-sm-12">
+        <current-weather-card></current-weather-card>
       </div>
+      <div class="col-lg-9 col-sm-12">
+        <forecast-weather-card></forecast-weather-card>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -24,9 +24,10 @@
 
   import RiverLevelCard from '~/components/RiverLevelCard.vue'
   import CurrentWeatherCard from '~/components/CurrentWeatherCard.vue'
+  import ForecastWeatherCard from '~/components/ForecastWeatherCard.vue'
 
   let Chartist;
-  if(process.client){
+  if (process.client) {
     Chartist = require('chartist')
   }
   export default {
@@ -35,9 +36,10 @@
       StatsCard,
       ChartCard,
       RiverLevelCard,
-      CurrentWeatherCard
+      CurrentWeatherCard,
+      ForecastWeatherCard
     },
-    data () {
+    data() {
       return {}
     },
   }
