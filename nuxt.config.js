@@ -33,6 +33,12 @@ module.exports = {
     { src: '~/plugins/globalDirectives' },
     { src: '~/plugins/charts', ssr: false },
   ],
+  modules: [
+    '@nuxtjs/axios'
+  ],
+  axios: {
+
+  },
   /*
   ** Build configuration
   */
