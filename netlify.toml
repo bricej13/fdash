@@ -1,7 +1,7 @@
 [build]
     publish = "dist"
     functions = "dist/func"
-    command = "cd functions && npm install && cd .. && netlify-lambda build functions"
+    command = "cd functions && npm install && cd .. && netlify-lambda build functions && npm run generate"
 
 
 [context.production]
