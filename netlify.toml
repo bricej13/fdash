@@ -1,2 +1,5 @@
 [build]
     functions = 'dist/functions'
+
+[context.production]
+  environment = { API_URL_BROWSER = "", API_URL = "" }

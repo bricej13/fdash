@@ -29,7 +29,7 @@ export const actions = {
 
     const date = new Date();
     const dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay();
-    this.$axios.get(`http://localhost:9000/weather`)
+    this.$axios.get(`/weather`)
       .then(d => {
 
           context.commit('setCurrent', d.data.currently);

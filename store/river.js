@@ -16,7 +16,7 @@ export const actions = {
   load(context) {
     const date = new Date();
     const dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay();
-    this.$axios.get(`http://localhost:9000/river`)
+    this.$axios.get(`/river`)
       .then(d => {
           context.commit('setLevel', d.data.flow);
           context.commit('setUpdated', d.data.updated);
