@@ -6,6 +6,9 @@
       <div class="col-lg-3 col-sm-6">
         <river-level-card></river-level-card>
       </div>
+      <div class="col-lg-3 col-sm-6">
+        <strava-card></strava-card>
+      </div>
     </div>
     <div class="row">
       <div class="col-sm-12">
@@ -30,6 +33,7 @@
   import CurrentWeatherCard from '~/components/CurrentWeatherCard.vue'
   import ForecastWeatherCard from '~/components/ForecastWeatherCard.vue'
   import CalendarCard from '~/components/CalendarCard.vue'
+  import StravaCard from '~/components/StravaCard.vue'
 
   let Chartist;
   if (process.client) {
@@ -41,7 +45,8 @@
       RiverLevelCard,
       CurrentWeatherCard,
       ForecastWeatherCard,
-      CalendarCard
+      CalendarCard,
+      StravaCard
     },
     data() {
       return {}
