@@ -1,14 +1,13 @@
 <template>
   <stats-card>
     <div class="icon-big text-center" slot="header">
-      <i class="ti-pulse"></i>
+      <i class="ti-calendar"></i>
     </div>
     <div class="numbers" slot="content">
-      <p>Boise River Level</p>
-      {{ $store.state.river.level }} <span style="color:#AAA">ft³/s</span>
+      <p>{{ $store.state.calendar.events }}</p>
     </div>
     <div class="stats" slot="footer">
-      <i class="ti-reload"></i> Updated {{ $store.state.river.updated }}
+      <i class="ti-location-pin"></i>
     </div>
   </stats-card>
 </template>
@@ -17,13 +16,13 @@
   import StatsCard from '~/components/UIComponents/Cards/StatsCard.vue'
 
   export default {
-    name: "RiverLevelCard",
+    name: "CalendarCard",
     components: {StatsCard},
     created: function () {
-      this.$store.dispatch('river/load');
+      this.$store.dispatch('calendar/load');
       setInterval(function() {
-        this.$store.dispatch('river/load');
-      }, 21600000)
+        this.$store.dispatch('calendar/load');
+      }, 900000)
     }
   }
 </script>

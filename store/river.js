@@ -16,13 +16,10 @@ export const actions = {
   load(context) {
     const date = new Date();
     const dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay();
-    this.$axios.get(`https://waterdata.usgs.gov/id/nwis/dv?cb_00010=on&cb_00060=on&format=rdb&site_no=13206000&referred_module=sw&period=&begin_date=${dateString}&end_date=${dateString}`)
+    this.$axios.get(`http://localhost:9000/river`)
       .then(d => {
-          let arr = d.data.trim().split('\n');
-          let line = arr[arr.length - 1];
-          let pieces = line.split('\t');
-          context.commit('setLevel', pieces[3]);
-          context.commit('setUpdated', pieces[2]);
+          context.commit('setLevel', d.data.flow);
+          context.commit('setUpdated', d.data.updated);
         }
       )
   }

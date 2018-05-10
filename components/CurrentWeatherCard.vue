@@ -4,11 +4,11 @@
       <i class="ti-cloud"></i>
     </div>
     <div class="numbers" slot="content">
-      <p>{{ $store.state.weather.current.text }}</p>
-      {{ $store.state.weather.current.temp }} <span style="color:#AAA">{{ $store.state.weather.units.temperature }}</span>
+      <p>{{ $store.state.weather.current.summary }}</p>
+      {{ $store.state.weather.current.temperature }} <span style="color:#AAA">F</span>
     </div>
     <div class="stats" slot="footer">
-      <i class="ti-location-pin"></i> {{ $store.state.weather.location }}
+      <i class="ti-light-bulb"></i> {{ $store.state.weather.minutely.summary  }}
     </div>
   </stats-card>
 </template>
@@ -20,6 +20,7 @@
     name: "CurrentWeatherCard",
     components: {StatsCard},
     created: function () {
+      this.$store.dispatch('weather/load');
       setInterval(function() {
         this.$store.dispatch('weather/load');
       }, 900000)
