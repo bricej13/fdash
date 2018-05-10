@@ -5,7 +5,4 @@
 
 
 [context.production]
-    environment = {
-        API_URL_BROWSER = "https://johnson-family-dashboard.netlify.com/.netlify/functions/",
-        API_URL = "https://johnson-family-dashboard.netlify.com/.netlify/functions/"
-    }
+    environment = { API_URL_BROWSER = "https://johnson-family-dashboard.netlify.com/.netlify/functions/", API_URL = "https://johnson-family-dashboard.netlify.com/.netlify/functions/" }
