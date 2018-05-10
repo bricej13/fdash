@@ -1,5 +1,8 @@
 [build]
-    functions = 'functions'
+    publish = "dist"
+    functions = "dist/func"
+    command = "cd functions && npm install && cd .. && netlify-lambda build functions"
+
 
 [context.production]
-  environment = { API_URL_BROWSER = "https://johnson-family-dashboard.netlify.com/", API_URL = "https://johnson-family-dashboard.netlify.com/" }
+    environment = { API_URL_BROWSER = "https://johnson-family-dashboard.netlify.com/", API_URL = "https://johnson-family-dashboard.netlify.com/" }
