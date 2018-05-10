@@ -1,5 +1,5 @@
 [build]
-    functions = 'dist/functions'
+    functions = 'functions'
 
 [context.production]
   environment = { API_URL_BROWSER = "https://johnson-family-dashboard.netlify.com/", API_URL = "https://johnson-family-dashboard.netlify.com/" }
