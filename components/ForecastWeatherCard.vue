@@ -20,7 +20,6 @@
 
 <script>
   import ChartCard from '~/components/UIComponents/Cards/ChartCard.vue'
-
   export default {
     name: "ForecastWeatherCard",
     components: {ChartCard},

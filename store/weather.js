@@ -1,3 +1,4 @@
+
 export const state = () => ({
   updated: null,
   current: {},
@@ -51,96 +52,42 @@ export const getters = {
         data: {
           labels: state.daily.data.map(d => new Date(d.time * 1000).toString().split(" ")[0]),
           series: [
-            state.daily.data.map(d => d.precipProbability * 100),
-            state.daily.data.map(d => d.temperatureLow),
-            state.daily.data.map(d => d.temperatureHigh),
-            [state.current.temperature],
-          ]
-          /*
-          datasets: [
             {
-            label: 'Unfilled',
-            fill: false,
-            data: state.daily.data.map(d => d.temperatureLow),
-          }, {
-            label: 'Dashed',
-            fill: false,
-            borderDash: [5, 5],
-            data: state.daily.data.map(d => d.temperatureHigh),
-          }, {
-            label: 'Filled',
-            data: state.daily.data.map(d => d.precipProbability * 100),
-            fill: true,
-          }]
-          */
+              name: 'precipitation',
+              data: state.daily.data.map(d => d.precipProbability * 100)
+            },
+            {
+              name: 'low',
+              data: state.daily.data.map(d => d.temperatureLow)
+            },
+            {
+              name: 'high',
+              data: state.daily.data.map(d => d.temperatureHigh)
+            },
+            {
+              name: 'current',
+              data: [state.current.temperature]
+            },
+          ]
         },
         options: {
-          responsive: true,
-          title: {
-            display: true,
-            text: 'Chart.js Line Chart'
-          },
-          tooltips: {
-            mode: 'index',
-            intersect: false,
-          },
-          hover: {
-            mode: 'nearest',
-            intersect: true
-          },
-          scales: {
-            xAxes: [{
-              display: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'Month'
-              }
-            }],
-            yAxes: [{
-              display: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'Value'
-              }
-            }]
+          series: {
+            low: {
+              showPoint: false,
+            },
+            high: {
+              showPoint: false,
+            },
+            current: {
+              // lineSmooth: Chartist.Interpolation.cardinal({fillHoles: true,})
+            },
+            precipitation: {
+              showPoint: false,
+              showArea: true,
+              showLine: false
+            }
           }
         }
       }
-
-    /*
-    return !state.updated ? {} :
-      {
-        data: {
-          labels: state.daily.data.map(d => new Date(d.time * 1000).toString().split(" ")[0]),
-          datasets: [
-            {
-              label: 'Lows',
-              data: state.daily.data.map(d => d.temperatureLow),
-            },
-            {
-              label: 'Highs',
-              data: state.daily.data.map(d => d.temperatureHigh),
-            },
-            {
-              label: 'Precipitation',
-              fill: true,
-              data: state.daily.data.map(d => d.precipProbability * 100),
-            },
-            {
-              label: 'Current',
-              data: [state.current.temperature]
-            }
-          ],
-          /*
-          series: [
-            state.daily.data.map(d => d.temperatureLow),
-            state.daily.data.map(d => d.temperatureHigh),
-            [state.current.temperature],
-            state.daily.data.map(d => d.precipProbability * 100),
-          ]
-        },
-        options: {}
-      }
-      */
   }
 };
