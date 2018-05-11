@@ -2,7 +2,10 @@
   "name": "functions",
   "description": "netlify function example",
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "date-fns": "^1.29.0",
+    "ical-expander": "^1.1.2",
+    "ical.js": "^1.2.2"
   },
   "private": true
 }

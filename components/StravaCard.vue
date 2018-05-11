@@ -8,8 +8,8 @@
         <slot name="subTitle">Weekly goal: {{ goal | mToMi }}mi</slot>
       </p>
     </div>
-    <div class="content" slot="content" v-if="$store.state.strava.updated">
-      <div class="exercise-progress-bar" :style="{width: (progress.total / goal * 100) + '%'}">
+    <div class="content" slot="content">
+      <div class="exercise-progress-bar" :style="{width: (progress.total / goal * 100) + '%'}" v-if="$store.state.strava.updated">
         <div class="run-progress progress-chunk" :style="{width: progress.run + '%'}" v-if="progress.run">🏃‍ {{ summary.Run | mToMi}}mi</div>
         <div class="ride-progress progress-chunk" :style="{width: progress.ride + '%'}" v-if="progress.ride">🚴 {{ summary.Ride| mToMi }}mi</div>
         <div class="swim-progress progress-chunk" :style="{width: progress.swim + '%'}" v-if="progress.swim">🏊 {{ summary.Swim }}m</div>

@@ -15,7 +15,7 @@ export const actions = {
     const dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay();
     this.$axios.get(`/calendar`)
       .then(d => {
-          context.commit('setEvents', d.data.split('\n'));
+          context.commit('setEvents', d.data);
         }
       )
   }
