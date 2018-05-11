@@ -1,6 +1,12 @@
 <template>
   <div>
 
+    <div class="row">
+      <div class="col-sm-12">
+        <calendar-card></calendar-card>
+      </div>
+    </div>
+
     <!--Stats cards-->
     <div class="row">
       <div class="col-lg-4 col-sm-6">
@@ -18,12 +24,6 @@
       </div>
       <div class="col-md-9 col-sm-12">
         <forecast-weather-card></forecast-weather-card>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-12">
-        <calendar-card></calendar-card>
       </div>
     </div>
 
