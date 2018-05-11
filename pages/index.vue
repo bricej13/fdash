@@ -21,8 +21,7 @@
         <current-weather-card></current-weather-card>
       </div>
       <div class="col-lg-9 col-sm-12">
-        <!--<forecast-weather-card></forecast-weather-card>-->
-
+        <forecast-weather-card></forecast-weather-card>
       </div>
     </div>
   </div>

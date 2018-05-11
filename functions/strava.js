@@ -6,13 +6,23 @@ exports.handler = function (event, context, callback) {
   if (event.queryStringParameters.summary) {
     console.log('loading summary');
     strava.athletes.stats({id: athId}, function (err, payload, limits) {
-      callback(null, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-        statusCode: 200,
-        body: JSON.stringify(payload)
-      });
+      if (err) {
+        callback(null, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+          statusCode: 400,
+          body: err
+        });
+      } else {
+        callback(null, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+          statusCode: 200,
+          body: JSON.stringify(payload)
+        });
+      }
     });
   }
 
@@ -20,13 +30,23 @@ exports.handler = function (event, context, callback) {
     console.log('loading activities');
     const firstDayOfWeek = getMonday(new Date);
     strava.athlete.listActivities({id: athId, after: firstDayOfWeek.getTime() / 1000}, function (err, payload, limits) {
-      callback(null, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-        statusCode: 200,
-        body: JSON.stringify(payload)
-      });
+      if (err) {
+        callback(null, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+          statusCode: 400,
+          body: err
+        });
+      } else {
+        callback(null, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+          statusCode: 200,
+          body: JSON.stringify(payload)
+        });
+      }
     });
   }
 

@@ -1,8 +1,8 @@
 <template>
-  <chart-card :chart-data="chartForecast.data" :chart-options="chartForecast.options" :data-loaded="dataLoaded">
+  <chart-card :chart-data="$store.getters['weather/dailyChartData'].data" :chart-options="$store.getters['weather/dailyChartData'].options" :data-loaded="dataLoaded">
     <h4 slot="title" class="title">Weekly Forecast</h4>
 
-    <span slot="subTitle">{{ $store.state.weather.location }}</span>
+    <span slot="subTitle">{{ $store.state.weather.daily.summary }}</span>
 
     <div slot="legend">
       <i class="fa fa-circle text-warning"></i> High
@@ -24,27 +24,10 @@
     name: "ForecastWeatherCard",
     components: {ChartCard},
     computed: {
-      chartForecast() {
-        const labels = this.$store.state.weather.forecast.map(d => d.day)
-        const highs = this.$store.state.weather.forecast.map(d => d.high)
-        const lows = this.$store.state.weather.forecast.map(d => d.low)
-        return {
-          data: {
-            labels: labels,
-            series: [lows, highs, [this.$store.state.weather.current.temp]]
-          },
-          options: {}
-        }
-      },
       dataLoaded() {
         return this.$store.state.weather.updated != null
       }
     },
-    created: function () {
-      setInterval(function() {
-        this.$store.dispatch('weather/load');
-      }, 21600000)
-    }
   }
 </script>
 
