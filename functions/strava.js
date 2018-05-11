@@ -9,6 +9,7 @@ exports.handler = function (event, context, callback) {
       callback(null, {
         headers: {
           "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "max-age=300"
         },
         statusCode: 200,
         body: err ? JSON.stringify(err) : JSON.stringify(payload)
@@ -23,6 +24,7 @@ exports.handler = function (event, context, callback) {
       callback(null, {
         headers: {
           "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "max-age=300"
         },
         statusCode: 200,
         body: err ? JSON.stringify(err) : JSON.stringify(payload)
@@ -34,6 +36,7 @@ exports.handler = function (event, context, callback) {
     callback(null, {
       headers: {
         "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "max-age=300"
       },
       statusCode: 200,
       body: ""

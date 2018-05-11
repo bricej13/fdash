@@ -29,6 +29,7 @@ exports.handler = function (event, context, callback) {
       callback(null, {
         headers: {
           "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "max-age=60"
         },
         statusCode: 200,
         body: JSON.stringify(allEvents)

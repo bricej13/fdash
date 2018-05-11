@@ -5,6 +5,7 @@ exports.handler = function (event, context, callback) {
       callback(null, {
         headers: {
           "Access-Control-Allow-Origin" : "*",
+          "Cache-Control": "max-age=600"
         },
         statusCode: 200,
         body: JSON.stringify(d.data)
