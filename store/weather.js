@@ -45,12 +45,12 @@ export const getters = {
     {
       type: 'line',
       data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: state.daily.data.map(d => new Date(d.time * 1000).toString().split(" ")[0]),
         series: [
+          state.daily.data.map(d => d.precipProbability * 100),
           state.daily.data.map(d => d.temperatureLow),
           state.daily.data.map(d => d.temperatureHigh),
           [state.current.temperature],
-          state.daily.data.map(d => d.precipProbability * 100),
         ]
         /*
         datasets: [

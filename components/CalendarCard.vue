@@ -20,9 +20,6 @@
     components: {StatsCard},
     created: function () {
       this.$store.dispatch('calendar/load');
-      setInterval(function() {
-        this.$store.dispatch('calendar/load');
-      }, 900000)
     }
   }
 </script>

@@ -1,13 +1,14 @@
 <template>
-  <chart-card :chart-data="$store.getters['weather/dailyChartData'].data" :chart-options="$store.getters['weather/dailyChartData'].options" :data-loaded="dataLoaded">
+  <chart-card :chart-data="chartConfig.data" :chart-options="chartConfig.options" :data-loaded="dataLoaded">
     <h4 slot="title" class="title">Weekly Forecast</h4>
 
     <span slot="subTitle">{{ $store.state.weather.daily.summary }}</span>
 
     <div slot="legend">
-      <i class="fa fa-circle text-warning"></i> High
-      <i class="fa fa-circle text-info"></i> Low
-      <i class="fa fa-circle text-danger"></i> Current
+      <i class="fa fa-circle text-danger"></i> High
+      <i class="fa fa-circle text-warning"></i> Low
+      <i class="fa fa-circle text-success"></i> Current
+      <i class="fa fa-circle text-info"></i> Precipitation %
     </div>
 
     <span slot="footer">
@@ -26,6 +27,9 @@
     computed: {
       dataLoaded() {
         return this.$store.state.weather.updated != null
+      },
+      chartConfig() {
+        return this.$store.getters['weather/dailyChartData'];
       }
     },
   }

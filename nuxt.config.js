@@ -21,6 +21,7 @@ module.exports = {
       { rel: 'stylesheet', href: "https://fonts.googleapis.com/css?family=Montserrat" },
       { rel: 'stylesheet', href: "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" },
       { rel: 'stylesheet', href: "/css/themify-icons.css" },
+      { rel: 'stylesheet', href: "/css/weather-icons.min.css" },
     ]
   },
   /*

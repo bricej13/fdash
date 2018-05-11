@@ -3,18 +3,14 @@
 
     <!--Stats cards-->
     <div class="row">
-      <div class="col-lg-3 col-sm-6">
+      <div class="col-lg-4 col-sm-6">
         <river-level-card></river-level-card>
       </div>
-      <div class="col-lg-3 col-sm-6">
+      <div class="col-lg-4 col-sm-6">
         <strava-card></strava-card>
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <calendar-card></calendar-card>
-      </div>
-    </div>
+
 
     <div class="row">
       <div class="col-lg-3 col-sm-12">
@@ -24,6 +20,13 @@
         <forecast-weather-card></forecast-weather-card>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <calendar-card></calendar-card>
+      </div>
+    </div>
+
   </div>
 </template>
 <script>
