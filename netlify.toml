@@ -5,4 +5,4 @@
 
 
 [context.production]
-    environment = { API_URL_BROWSER = "https://johnson-family-dashboard.netlify.com/.netlify/functions/", API_URL = "https://johnson-family-dashboard.netlify.com/.netlify/functions/", STRAVA_ACCESS_TOKEN = "bb7dca1fbd79b67a09efbbb183db589c0b6622ed", STRAVA_CLIENT_ID = 16034, STRAVA_CLIENT_SECRET = "9182ecf61cde2dd1acfd68339bc3b30c9eb18621", STRAVA_REDIRECT_URI = "johnson-family-dashboard.netlify.com" }
+    environment = { API_URL_BROWSER = "https://johnson-family-dashboard.netlify.com/.netlify/functions/", API_URL = "https://johnson-family-dashboard.netlify.com/.netlify/functions/", STRAVA_ACCESS_TOKEN = "bb7dca1fbd79b67a09efbbb183db589c0b6622ed", STRAVA_CLIENT_ID = "16034", STRAVA_CLIENT_SECRET = "9182ecf61cde2dd1acfd68339bc3b30c9eb18621", STRAVA_REDIRECT_URI = "johnson-family-dashboard.netlify.com" }
