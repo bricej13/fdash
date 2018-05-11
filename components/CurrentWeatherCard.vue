@@ -5,7 +5,7 @@
     </div>
     <div class="numbers" slot="content">
       <p>{{ $store.state.weather.current.summary }}</p>
-      {{ $store.state.weather.current.temperature }} <span style="color:#AAA">F</span>
+      {{ $store.state.weather.current.temperature | round }} <span style="color:#AAA">F</span>
 
     </div>
 
@@ -60,6 +60,11 @@
           default:
             return 'na'
         }
+      }
+    },
+    filters: {
+      round(val) {
+        return Math.floor(val)
       }
     }
   }
