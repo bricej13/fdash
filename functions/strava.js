@@ -6,23 +6,13 @@ exports.handler = function (event, context, callback) {
   if (event.queryStringParameters.summary) {
     console.log('loading summary');
     strava.athletes.stats({id: athId}, function (err, payload, limits) {
-      if (err) {
-        callback(null, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-          },
-          statusCode: 400,
-          body: err
-        });
-      } else {
         callback(null, {
           headers: {
             "Access-Control-Allow-Origin": "*",
           },
           statusCode: 200,
-          body: JSON.stringify(payload)
+          body: err || JSON.stringify(payload)
         });
-      }
     });
   }
 
