@@ -13,10 +13,10 @@
 
 
     <div class="row">
-      <div class="col-lg-3 col-sm-12">
+      <div class="col-md-3 col-sm-12">
         <current-weather-card></current-weather-card>
       </div>
-      <div class="col-lg-9 col-sm-12">
+      <div class="col-md-9 col-sm-12">
         <forecast-weather-card></forecast-weather-card>
       </div>
     </div>

@@ -6,7 +6,16 @@
     <div class="numbers" slot="content">
       <p>{{ $store.state.weather.current.summary }}</p>
       {{ $store.state.weather.current.temperature }} <span style="color:#AAA">F</span>
+
     </div>
+
+    <div slot="subContent">
+      <div class="alert alert-info" v-for="alert in alerts" :key="alert.time" style="max-height: 300px; overflow: hidden;">
+        <h4><b>{{ alert.severity }}: </b>{{ alert.title }}</h4>
+        <p>{{ alert.description}}</p>
+      </div>
+    </div>
+
     <div class="stats" slot="footer">
       <i class="ti-light-bulb"></i> {{ $store.state.weather.minutely.summary }}
     </div>
@@ -23,6 +32,9 @@
       this.$store.dispatch('weather/load');
     },
     computed: {
+      alerts() {
+        return this.$store.state.weather.alerts;
+      },
       weatherIcon() {
         switch (this.$store.state.weather.current.icon) {
           case 'rain':

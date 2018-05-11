@@ -1,10 +1,10 @@
-
 export const state = () => ({
   updated: null,
   current: {},
   minutely: {},
   hourly: {},
-  daily: {}
+  daily: {},
+  alerts: []
 });
 
 export const mutations = {
@@ -20,6 +20,9 @@ export const mutations = {
   setDaily(state, daily) {
     state.daily = daily;
   },
+  setAlerts(state, alerts) {
+    state.alerts = alerts;
+  },
   updateUpdated(state) {
     state.updated = new Date().toLocaleString();
   }
@@ -33,6 +36,7 @@ export const actions = {
           commit('setMinutely', d.data.minutely);
           commit('setHourly', d.data.hourly);
           commit('setDaily', d.data.daily);
+          commit('setAlerts', d.data.alerts || []);
           commit('updateUpdated');
         }
       )
@@ -42,66 +46,66 @@ export const actions = {
 export const getters = {
   dailyChartData: state => {
     return !state.updated ? {} :
-    {
-      type: 'line',
-      data: {
-        labels: state.daily.data.map(d => new Date(d.time * 1000).toString().split(" ")[0]),
-        series: [
-          state.daily.data.map(d => d.precipProbability * 100),
-          state.daily.data.map(d => d.temperatureLow),
-          state.daily.data.map(d => d.temperatureHigh),
-          [state.current.temperature],
-        ]
-        /*
-        datasets: [
-          {
-          label: 'Unfilled',
-          fill: false,
-          data: state.daily.data.map(d => d.temperatureLow),
-        }, {
-          label: 'Dashed',
-          fill: false,
-          borderDash: [5, 5],
-          data: state.daily.data.map(d => d.temperatureHigh),
-        }, {
-          label: 'Filled',
-          data: state.daily.data.map(d => d.precipProbability * 100),
-          fill: true,
-        }]
-        */
-      },
-      options: {
-        responsive: true,
-        title: {
-          display: true,
-          text: 'Chart.js Line Chart'
-        },
-        tooltips: {
-          mode: 'index',
-          intersect: false,
-        },
-        hover: {
-          mode: 'nearest',
-          intersect: true
-        },
-        scales: {
-          xAxes: [{
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Month'
-            }
-          }],
-          yAxes: [{
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Value'
-            }
+      {
+        type: 'line',
+        data: {
+          labels: state.daily.data.map(d => new Date(d.time * 1000).toString().split(" ")[0]),
+          series: [
+            state.daily.data.map(d => d.precipProbability * 100),
+            state.daily.data.map(d => d.temperatureLow),
+            state.daily.data.map(d => d.temperatureHigh),
+            [state.current.temperature],
+          ]
+          /*
+          datasets: [
+            {
+            label: 'Unfilled',
+            fill: false,
+            data: state.daily.data.map(d => d.temperatureLow),
+          }, {
+            label: 'Dashed',
+            fill: false,
+            borderDash: [5, 5],
+            data: state.daily.data.map(d => d.temperatureHigh),
+          }, {
+            label: 'Filled',
+            data: state.daily.data.map(d => d.precipProbability * 100),
+            fill: true,
           }]
+          */
+        },
+        options: {
+          responsive: true,
+          title: {
+            display: true,
+            text: 'Chart.js Line Chart'
+          },
+          tooltips: {
+            mode: 'index',
+            intersect: false,
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Month'
+              }
+            }],
+            yAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Value'
+              }
+            }]
+          }
         }
       }
-    }
 
     /*
     return !state.updated ? {} :
