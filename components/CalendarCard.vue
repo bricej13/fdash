@@ -25,7 +25,6 @@
       </div>
 
       <div class="footer">
-        <hr>
         <div class="stats">
           <slot name="footer">
             <i class="ti-reload"></i> What goes here?

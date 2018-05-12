@@ -1,8 +1,14 @@
 <template>
   <div>
-    <a @click="editable = !editable">
-      {{ editable ? 'Done' : 'Edit' }}
-    </a>
+    <div class="row">
+      <div class="col-sm-1 col-sm-offset-11">
+        <button type="button" class="btn btn-link" @click="editable = !editable">
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+          {{ editable ? 'Done' : '' }}
+        </button>
+      </div>
+    </div>
+
     <no-ssr>
 
       <grid-layout
