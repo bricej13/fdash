@@ -6,7 +6,7 @@ Step 2: Register your component in the `components/Widgets/widgets.js` file.
 But what if your widget needs it's own vuex store?
 
 ### Add vuex store for widget
-Just add a (vuex module file)[https://vuex.vuejs.org/en/modules.html] for your widget in the `store` directory. 
+Just add a [vuex module file](https://vuex.vuejs.org/en/modules.html) for your widget in the `store` directory. 
 There are several example files in there already.
 
 But what if I need to run some server-side code?
