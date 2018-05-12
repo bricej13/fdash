@@ -1,22 +1,18 @@
-# vue-paper-dashboard-nuxt
+## Custom widgets
+You can easily add custom widgets in 2 easy steps.
+Step 1: Add your new component to the `components/Widgets` directory.
+Step 2: Register your component in the `components/Widgets/widgets.js` file. 
 
-> Nuxt.js project
+But what if your widget needs it's own vuex store?
 
-## Build Setup
+### Add vuex store for widget
+Just add a (vuex module file)[https://vuex.vuejs.org/en/modules.html] for your widget in the `store` directory. 
+There are several example files in there already.
 
-``` bash
-# install dependencies
-$ npm install # Or yarn install
+But what if I need to run some server-side code?
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+### Add a serverless (Lambda) function for your widget
+Lambda functions live in the `functions` directory. You can add your own by merely creating your function and saving it in the directory.
+*Note:* if you need to use an `npm` library, you need to add it to the `package.json` located in the `functions` directory, as functions are built separately from the rest of the project.
 
-# build for production and launch server
-$ npm run build
-$ npm start
 
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).

@@ -40,16 +40,12 @@
   </div>
 </template>
 <script>
-  import RiverLevelCard from '~/components/RiverLevelCard.vue'
-  import CurrentWeatherCard from '~/components/CurrentWeatherCard.vue'
-  import ForecastWeatherCard from '~/components/ForecastWeatherCard.vue'
-  import CalendarCard from '~/components/CalendarCard.vue'
-  import StravaCard from '~/components/StravaCard.vue'
+  import * as widgets from '~/components/widgets/widgets'
 
   export default {
     layout: "dashboard",
     methods: {},
-    components: {RiverLevelCard, CurrentWeatherCard, ForecastWeatherCard, CalendarCard, StravaCard},
+    components: widgets,
     created: function () {
       if (process.browser) {
         let storageLayout = localStorage.getItem("layout");
@@ -67,6 +63,11 @@
       return {
         editable: false,
         layout: []
+      }
+    },
+    computed: {
+      widgetList() {
+        return Object.keys(widgets);
       }
     },
     methods: {
