@@ -12,7 +12,8 @@
     <div class="content" slot="content">
 
       <div class="calendar-wrapper">
-        <div class="calendar-day" v-for="day in days" :key="day.date.toString()" :class="{today: isSameDay(day.date, new Date())}">
+        <div class="calendar-day" v-for="day in days" :key="day.date.toString()"
+             :class="{today: isSameDay(day.date, new Date())}">
           <div class="day-header">
             {{ day.date | dayName }}
           </div>
@@ -45,6 +46,9 @@
   export default {
     name: "CalendarCard",
     components: {StatsCard},
+    props: {
+      calendars: { type: Array }
+    },
     created: function () {
       this.$store.dispatch('calendar/load');
     },

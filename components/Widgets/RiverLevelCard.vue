@@ -19,6 +19,9 @@
   export default {
     name: "RiverLevelCard",
     components: {StatsCard},
+    props: {
+      usgsSite: { type: Number }
+    },
     created: function () {
       this.$store.dispatch('river/load');
     }

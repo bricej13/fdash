@@ -28,6 +28,10 @@
   export default {
     name: "CurrentWeatherCard",
     components: {StatsCard},
+    props: {
+      lat: { type: Number },
+      long: { type: Number }
+    },
     created: function () {
       this.$store.dispatch('weather/load');
     },

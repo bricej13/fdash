@@ -34,6 +34,9 @@
   export default {
     name: "StravaCard",
     components: {StatsCard},
+    props: {
+      athleteId: { type: Number }
+    },
     created: function () {
       this.$store.dispatch('strava/load');
     },

@@ -24,16 +24,16 @@
         @layout-updated="saveLayout"
         :class="{editable: editable}"
       >
-        <grid-item v-for="item in layout"
-                   :x="item.x"
-                   :y="item.y"
-                   :w="item.w"
-                   :h="item.h"
-                   :i="item.i"
-                   :key="item.i"
+        <grid-item v-for="widget in layout"
+                   :x="widget.x"
+                   :y="widget.y"
+                   :w="widget.w"
+                   :h="widget.h"
+                   :i="widget.i"
+                   :key="widget.i"
                    class="grid-item"
         >
-          <component v-bind:is="item.template"></component>
+          <component v-bind:is="widget.template" v-bind="widget.props"></component>
         </grid-item>
       </grid-layout>
     </no-ssr>
@@ -51,11 +51,11 @@
         let storageLayout = localStorage.getItem("layout");
         this.layout = storageLayout ? JSON.parse(storageLayout) :
           [
-            {"x": 0, "y": 0, "w": 4, "h": 3, "i": "0", template: 'StravaCard'},
-            {"x": 4, "y": 0, "w": 4, "h": 3, "i": "1", template: 'RiverLevelCard'},
-            {"x": 8, "y": 0, "w": 4, "h": 3, "i": "2", template: 'CurrentWeatherCard'},
-            {"x": 0, "y": 4, "w": 12, "h": 8, "i": "3", template: 'ForecastWeatherCard'},
-            {"x": 0, "y": 13, "w": 12, "h": 4, "i": "4", template: 'CalendarCard'},
+            {"x": 0, "y": 0, "w": 4, "h": 3, "i": "0", template: 'StravaCard', props: {athleteId: 12167062}},
+            {"x": 4, "y": 0, "w": 4, "h": 3, "i": "1", template: 'RiverLevelCard', props: {usgsSite: 13206000}},
+            {"x": 8, "y": 0, "w": 4, "h": 3, "i": "2", template: 'CurrentWeatherCard', props: {lat: 43.688735, long: -116.346076}},
+            {"x": 0, "y": 4, "w": 12, "h": 8, "i": "3", template: 'ForecastWeatherCard', props: {lat: 43.688735, long: -116.346076}},
+            {"x": 0, "y": 13, "w": 12, "h": 4, "i": "4", template: 'CalendarCard', props: {calendars: []}},
           ]
       }
     },

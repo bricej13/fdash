@@ -23,6 +23,10 @@
   export default {
     name: "ForecastWeatherCard",
     components: {ChartCard},
+    props: {
+      lat: { type: Number },
+      long: { type: Number }
+    },
     computed: {
       dataLoaded() {
         return this.$store.state.weather.updated != null
