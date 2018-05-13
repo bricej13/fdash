@@ -65,13 +65,15 @@
     },
     data: function () {
       return {
-        local_goal: 160934 * .6, // 100 miles,
+        local_goal: this.goal,
         local_athleteId: this.athleteId,
         editable: false
       }
     },
     created: function () {
-      this.$store.dispatch('strava/load');
+      if (this.athleteId) {
+        this.loadData(this.athleteId);
+      }
     },
     computed: {
       summary() {
@@ -94,7 +96,11 @@
         this.$emit('config-changes', {
           goal: Number(this.local_goal),
           athleteId: Number(this.local_athleteId)
-        })
+        });
+        this.loadData(this.local_athleteId)
+      },
+      loadData(athleteId) {
+        this.$store.dispatch('strava/load', {athleteId: athleteId});
       }
     },
     filters: {

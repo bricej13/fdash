@@ -30,8 +30,8 @@ export const mutations = {
 };
 
 export const actions = {
-  load({commit, state}) {
-    this.$axios.get(`/weather`)
+  load({commit, state},  {lat,  long}) {
+    this.$axios.get(`/weather?lat=${lat}&long=${long}`)
       .then(d => {
           commit('setCurrent', d.data.currently);
           commit('setMinutely', d.data.minutely);

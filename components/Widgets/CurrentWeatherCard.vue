@@ -14,7 +14,24 @@
         <h4><b>{{ alert.severity }}: </b>{{ alert.title }}</h4>
         <p>{{ alert.description}}</p>
       </div>
+      <div class="config">
+        <div @click="editable=true" v-if="!editable">edit</div>
+        <form v-if="editable">
+          <div class="form-group">
+            <label for="currentWeatherLat">Latitude</label>
+            <input type="number" class="form-control" id="currentWeatherLat" placeholder="lat"
+                   v-model="local_lat">
+
+            <label for="currentWeatherLong">Longitude</label>
+            <input type="number" class="form-control" id="currentWeatherLong" placeholder="long" v-model="local_long">
+
+            <button class="btn btn-link" @click="saveChanges">Done</button>
+          </div>
+
+        </form>
+      </div>
     </div>
+
 
     <div class="stats" slot="footer">
       <i class="ti-light-bulb"></i> {{ $store.state.weather.minutely.summary }}
@@ -32,8 +49,15 @@
       lat: { type: Number },
       long: { type: Number }
     },
+    data: function () {
+      return {
+        local_lat: this.lat,
+        local_long: this.long,
+        editable: false
+      }
+    },
     created: function () {
-      this.$store.dispatch('weather/load');
+      this.loadWeather(this.lat,  this.long);
     },
     computed: {
       alerts() {
@@ -64,6 +88,19 @@
           default:
             return 'na'
         }
+      }
+    },
+    methods: {
+      saveChanges() {
+        this.editable = false;
+        this.$emit('config-changes', {
+          lat: Number(this.local_lat),
+          long: Number(this.local_long)
+        });
+        this.loadWeather(this.local_lat, this.local_long);
+      },
+      loadWeather(lat, long) {
+        this.$store.dispatch('weather/load', {lat: lat, long: long});
       }
     },
     filters: {

@@ -17,19 +17,18 @@ export const mutations = {
 };
 
 export const actions = {
-  load(context) {
-
-    this.$axios.get(`/strava?activities=weekly`)
+  load({commit}, {athleteId}) {
+    this.$axios.get(`/strava?activities=${athleteId}`)
       .then(d => {
-          context.commit('setActivities', d.data);
-          context.commit('updateUpdated');
+          commit('setActivities', d.data);
+          commit('updateUpdated');
         }
       );
 
-    this.$axios.get(`/strava?summary=true`)
+    this.$axios.get(`/strava?summary=${athleteId}`)
       .then(d => {
-          context.commit('setSummary', d.data);
-          context.commit('updateUpdated');
+          commit('setSummary', d.data);
+          commit('updateUpdated');
         }
       )
 
