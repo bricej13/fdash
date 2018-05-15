@@ -34,7 +34,7 @@
 
 
     <div class="stats" slot="footer">
-      <i class="ti-light-bulb"></i> {{ $store.state.weather.minutely.summary }}
+      <i class="ti-light-bulb"></i> {{ ($store.state.weather.minutely || $store.state.weather.hourly).summary }}
     </div>
   </stats-card>
 </template>

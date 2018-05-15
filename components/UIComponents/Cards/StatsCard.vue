@@ -2,6 +2,7 @@
   <div class="card">
     <div class="content">
       <div class="row">
+
         <div class="col-xs-5">
           <slot name="header"></slot>
         </div>
@@ -9,9 +10,9 @@
           <slot name="content"></slot>
         </div>
       </div>
-      <div class="row">
-        <slot name="subContent"></slot>
-      </div>
+
+      <slot name="subContent"></slot>
+
       <div class="footer">
         <hr/>
         <slot name="footer"></slot>
