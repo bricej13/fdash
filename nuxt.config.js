@@ -16,11 +16,13 @@ module.exports = {
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
+      /*
       {rel: 'stylesheet', href: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"},
       {rel: 'stylesheet', href: "https://fonts.googleapis.com/css?family=Muli:400,300"},
       {rel: 'stylesheet', href: "https://fonts.googleapis.com/css?family=Montserrat"},
       {rel: 'stylesheet', href: "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"},
       {rel: 'stylesheet', href: "/css/themify-icons.css"},
+      */
       {rel: 'stylesheet', href: "/css/weather-icons.min.css"},
     ]
   },
@@ -29,14 +31,17 @@ module.exports = {
   */
   loading: {color: '#3B8070'},
   plugins: [
+    /*
     {src: '~/plugins/vue-grid', ssr: false},
     {src: '~/plugins/dashboard'},
     {src: '~/plugins/globalComponents'},
     {src: '~/plugins/globalDirectives'},
     {src: '~/plugins/charts', ssr: false},
+    */
   ],
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'nuxt-buefy'
   ],
   axios: {},
   /*

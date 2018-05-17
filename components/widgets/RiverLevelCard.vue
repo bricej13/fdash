@@ -1,37 +1,37 @@
 <template>
-  <card>
-    <h4 slot="header" class="title">{{bodyOfWater}}</h4>
+  <bulma-card>
+    <template slot="title">{{location}}</template>
 
-    <div slot="subTitle">{{location}}</div>
+    <template slot="content">
+      <div class="subtitle">7 Day Trend:</div>
+      <trend
+        :data="values7Days"
+        :gradient="['#41B883', '#F3BB45', '#EB5E28']"
+        auto-draw
+        smooth
+      ></trend>
+    </template>
 
-    <div slot="content">
-      <div>7 Day Trend:</div>
-      <div class="trend-container">
-        <trend
-          :data="values7Days"
-          :gradient="['#41B883', '#F3BB45', '#EB5E28']"
-          auto-draw
-          smooth
-        ></trend>
+    <template slot="footer">
+      <div class="card-footer-item">
+        <b>{{value}} </b> <br/> <span style="color:#AAA">{{unit}}</span>
       </div>
-      Currently: <b>{{value}} </b> <span style="color:#AAA">{{unit}}</span>
-    </div>
+      <div class="card-footer-item">
+        Updated {{measurementDate}}
+      </div>
+    </template>
 
-    <div slot="footer">
-      <i class="ti-reload"></i> Updated {{measurementDate}}
-    </div>
-  </card>
+  </bulma-card>
 
 </template>
 
 <script>
-  import StatsCard from '~/components/UIComponents/Cards/StatsCard.vue'
-  import Card from '~/components/UIComponents/Cards/Card.vue'
+  import BulmaCard from '~/components/UIComponents/Cards/BulmaCard'
   import Trend from 'vuetrend'
 
   export default {
     name: "RiverLevelCard",
-    components: {StatsCard, Trend, Card},
+    components: {BulmaCard, Trend},
     props: {
       usgsSite: {type: Number}
     },
@@ -53,8 +53,7 @@
       this.loading = true;
       this.$axios.get(`https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${this.site}&parameterCd=${this.paramCode}&period=P7D&siteStatus=all`)
         .then(d => {
-          this.bodyOfWater = d.data.value.timeSeries[0].sourceInfo.siteName.split(' AT ')[0];
-          this.location = d.data.value.timeSeries[0].sourceInfo.siteName.split(' AT ')[1];
+          this.location = d.data.value.timeSeries[0].sourceInfo.siteName;
           this.unit = d.data.value.timeSeries[0].variable.unit.unitCode;
 
           this.values = d.data.value.timeSeries[0].values[0].value.map(v => Number(v.value));
@@ -83,8 +82,5 @@
 </script>
 
 <style scoped>
-  .trend-container {
-    display: flex;
-  }
 
 </style>
