@@ -1,53 +1,74 @@
 <template>
-  <stats-card>
-    <div class="icon-big text-center" slot="header">
-      <i class="wi" :class="weatherIcon"></i>
-    </div>
-    <div class="numbers" slot="content">
-      <p>{{ $store.state.weather.current.summary }}</p>
-      {{ $store.state.weather.current.temperature | round }} <span style="color:#AAA">F</span>
+  <bulma-card>
+    <template slot="title">Current Weather</template>
+    <template slot="titleIcon">
+      <span @click="editable=true" :disabled="editable" class="mdi mdi-pencil"></span>
+    </template>
 
-    </div>
+    <template slot="content">
 
-    <div slot="subContent">
-      <div class="alert alert-info" v-for="alert in alerts" :key="alert.time" style="max-height: 300px; overflow: hidden;">
-        <h4><b>{{ alert.severity }}: </b>{{ alert.title }}</h4>
-        <p>{{ alert.description}}</p>
-      </div>
-      <div class="config">
-        <div @click="editable=true" v-if="!editable">edit</div>
-        <form v-if="editable">
-          <div class="form-group">
-            <label for="currentWeatherLat">Latitude</label>
-            <input type="number" class="form-control" id="currentWeatherLat" placeholder="lat"
-                   v-model="local_lat">
+      <div class="columns" v-if="!editable">
 
-            <label for="currentWeatherLong">Longitude</label>
-            <input type="number" class="form-control" id="currentWeatherLong" placeholder="long" v-model="local_long">
-
-            <button class="btn btn-link" @click="saveChanges">Done</button>
+        <div class="column is-two-thirds">
+          <div class="is-size-1">
+            <i class="wi" :class="weatherIcon"></i>
           </div>
+          <div class="is-size-4">
+            {{ $store.state.weather.current.summary }}
+          </div>
+        </div>
 
-        </form>
+        <div class="column has-text-right is-size-1">
+          {{ $store.state.weather.current.temperature | round }}<span class="is-size-4 has-text-grey"> F</span>
+        </div>
+
+        <b-loading :is-full-page="false" :active="loading" :canCancel="false"></b-loading>
       </div>
-    </div>
+
+      <div class="config" v-if="editable">
+        <div class="field">
+          <label class="label" for="currentWeatherLat">Latitude</label>
+          <input type="number" class="input" id="currentWeatherLat" placeholder="lat"
+                 v-model="local_lat">
+        </div>
+
+        <div class="field">
+          <label class="label" for="currentWeatherLong">Longitude</label>
+          <input type="number" class="input" id="currentWeatherLong" placeholder="long" v-model="local_long">
+        </div>
+
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-primary" @click.prevent="saveChanges">Done</button>
+          </div>
+          <div class="control">
+            <button class="button is-text" @click="editable = false">Cancel</button>
+          </div>
+        </div>
+
+      </div>
+    </template>
 
 
-    <div class="stats" slot="footer">
-      <i class="ti-light-bulb"></i> {{ ($store.state.weather.minutely || $store.state.weather.hourly).summary }}
-    </div>
-  </stats-card>
+    <template slot="footer">
+      <div class="card-footer-item has-text-grey">
+        <i class=""></i> {{ ($store.state.weather.minutely || $store.state.weather.hourly).summary }}
+      </div>
+    </template>
+
+  </bulma-card>
 </template>
 
 <script>
   import StatsCard from '~/components/UIComponents/Cards/StatsCard.vue'
+  import BulmaCard from '~/components/UIComponents/Cards/BulmaCard.vue'
 
   export default {
     name: "CurrentWeatherCard",
-    components: {StatsCard},
+    components: {StatsCard, BulmaCard},
     props: {
-      lat: { type: Number },
-      long: { type: Number }
+      lat: {type: Number},
+      long: {type: Number}
     },
     data: function () {
       return {
@@ -57,9 +78,16 @@
       }
     },
     created: function () {
-      this.loadWeather(this.lat,  this.long);
+      if (this.lat && this.long) {
+        this.loadWeather(this.lat, this.long);
+      } else {
+        this.editable = true
+      }
     },
     computed: {
+      loading() {
+        return !this.$store.state.weather.current
+      },
       alerts() {
         return this.$store.state.weather.alerts;
       },

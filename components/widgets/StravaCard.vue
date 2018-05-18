@@ -1,4 +1,62 @@
 <template>
+  <bulma-card>
+    <template slot="title">Strava Distance</template>
+    <template slot="titleIcon">
+      <span @click="editable=true" :disabled="editable" class="mdi mdi-pencil"></span>
+    </template>
+    <template slot="content">
+
+
+      <div class="columns has-text-centered" v-if="!editable">
+        <div class="column" v-if="summary.Run">
+          <div class="has-text-grey">RUN</div>
+          <div class="is-size-2">{{ summary.Run | mToMi }}<span class="is-size-4 has-text-grey"> mi</span></div>
+        </div>
+        <div class="column" v-if="summary.Ride">
+          <div class="has-text-grey">RIDE</div>
+          <div class="is-size-2">{{ summary.Ride | mToMi }}<span class="is-size-4 has-text-grey"> mi</span></div>
+        </div>
+        <div class="column" v-if="summary.Swim">
+          <div class="has-text-grey">SWIM</div>
+          <div class="is-size-2">{{ summary.Swim }}<span class="is-size-4 has-text-grey"> m</span></div>
+        </div>
+      </div>
+
+      <div class="config" v-if="editable">
+
+        <div class="field">
+          <label class="label" for="stravaAthleteId">Athlete Id</label>
+          <input type="number" class="input" id="stravaAthleteId" placeholder="Athlete Id" v-model="local_athleteId">
+        </div>
+
+        <div class="field">
+          <label class="label" for="stravaGoal">Weekly Goal (m)</label>
+          <input type="number" class="input" id="stravaGoal" placeholder="Goal" v-model="local_goal">
+        </div>
+
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-primary" @click.prevent="saveChanges">Done</button>
+          </div>
+          <div class="control">
+            <button class="button is-text" @click="editable = false">Cancel</button>
+          </div>
+        </div>
+
+      </div>
+    </template>
+
+    <template slot="footer">
+      <div class="card-footer-item">
+        <span>Goal: {{goal | mToMi}}mi</span>
+      </div>
+      <div class="card-footer-item">
+        <i class="ti-reload"></i> Updated {{ $store.state.strava.updated }}
+      </div>
+    </template>
+  </bulma-card>
+
+  <!--
   <div class="card">
     <div class="header">
       <slot name="title">
@@ -44,15 +102,16 @@
       </div>
     </div>
   </div>
+  -->
 </template>
 
 <script>
-  import StatsCard from '~/components/UIComponents/Cards/StatsCard.vue'
+  import BulmaCard from '~/components/UIComponents/Cards/BulmaCard'
   import Stat from '~/components/UIComponents/Stat.vue'
 
   export default {
     name: "StravaCard",
-    components: {StatsCard, Stat},
+    components: {BulmaCard, Stat},
     props: {
       athleteId: {type: Number},
       goal: {type: Number},

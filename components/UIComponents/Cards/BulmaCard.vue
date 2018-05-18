@@ -4,6 +4,9 @@
       <div class="card-header-title">
         <slot name="title"></slot>
       </div>
+      <div class="card-header-icon">
+        <slot name="titleIcon"></slot>
+      </div>
     </header>
 
 

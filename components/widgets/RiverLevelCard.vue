@@ -14,10 +14,10 @@
 
     <template slot="footer">
       <div class="card-footer-item">
-        <b>{{value}} </b> <br/> <span style="color:#AAA">{{unit}}</span>
+        <b>{{value}} </b>&nbsp;<span style="color:#AAA">{{unit}}</span>
       </div>
       <div class="card-footer-item">
-        Updated {{measurementDate}}
+        Updated {{measurementDate ? measurementDate.toLocaleTimeString() : ''}}
       </div>
     </template>
 
@@ -53,7 +53,7 @@
       this.loading = true;
       this.$axios.get(`https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${this.site}&parameterCd=${this.paramCode}&period=P7D&siteStatus=all`)
         .then(d => {
-          this.location = d.data.value.timeSeries[0].sourceInfo.siteName;
+          this.location = d.data.value.timeSeries[0].sourceInfo.siteName.split(' AT ')[1];
           this.unit = d.data.value.timeSeries[0].variable.unit.unitCode;
 
           this.values = d.data.value.timeSeries[0].values[0].value.map(v => Number(v.value));
