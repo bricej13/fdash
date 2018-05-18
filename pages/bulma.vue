@@ -6,6 +6,14 @@
           Dashboard
         </div>
       </div>
+
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          <div class="navbar-item">
+            {{currentDate | formatDate}}
+          </div>
+        </div>
+      </div>
     </header>
 
     <div class="main-content">
@@ -35,10 +43,26 @@
 
 <script>
   import * as widgets from '~/components/widgets/widgets'
+  import {format} from 'date-fns'
 
   export default {
     name: "bulma",
-    components: widgets
+    components: widgets,
+    data: function () {
+      return {
+        currentDate: new Date()
+      }
+    },
+    created() {
+      setInterval(function () {
+        this.currentDate = new Date();
+      }.bind(this), 10000)
+    },
+    filters: {
+      formatDate(val) {
+        return format(val, 'dddd MMM Do h:mma')
+      }
+    }
   }
 </script>
 

@@ -11,7 +11,8 @@
 
 
     <div class="card-content">
-      <div class="content">
+      <b-loading :is-full-page="false" :active="loading" :canCancel="false"></b-loading>
+      <div class="content" :class="{invisible: loading}">
         <slot name="content"></slot>
       </div>
     </div>
@@ -24,10 +25,23 @@
 
 <script>
   export default {
-    name: "BulmaCard"
+    name: "BulmaCard",
+    props: ['loading']
   }
 </script>
 
 <style scoped>
+  * {
+    transition: opacity .2s ease-in-out;
+  }
+  .card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .invisible {
+    opacity: 0;
+  }
 
 </style>

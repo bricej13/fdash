@@ -1,5 +1,5 @@
 <template>
-  <bulma-card>
+  <bulma-card :loading="loading">
     <template slot="title">Current Weather</template>
     <template slot="titleIcon">
       <span @click="editable=true" :disabled="editable" class="mdi mdi-pencil"></span>
@@ -22,7 +22,6 @@
           {{ $store.state.weather.current.temperature | round }}<span class="is-size-4 has-text-grey"> F</span>
         </div>
 
-        <b-loading :is-full-page="false" :active="loading" :canCancel="false"></b-loading>
       </div>
 
       <div class="config" v-if="editable">

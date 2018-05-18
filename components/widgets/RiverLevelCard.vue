@@ -1,5 +1,5 @@
 <template>
-  <bulma-card>
+  <bulma-card :loading="loading">
     <template slot="title">{{location || 'River Levels'}}</template>
     <template slot="titleIcon">
       <span @click="editable=true" :disabled="editable" class="mdi mdi-pencil"></span>

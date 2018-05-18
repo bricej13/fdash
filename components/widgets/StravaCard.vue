@@ -1,5 +1,5 @@
 <template>
-  <bulma-card>
+  <bulma-card :loading="$store.state.strava.dataLoaded < 2">
     <template slot="title">Strava Distance</template>
     <template slot="titleIcon">
       <span @click="editable=true" :disabled="editable" class="mdi mdi-pencil"></span>
@@ -30,7 +30,7 @@
         </div>
 
         <div class="field">
-          <label class="label" for="stravaGoal">Weekly Goal (m)</label>
+          <label class="label" for="stravaGoal">Weekly Goal (meters)</label>
           <input type="number" class="input" id="stravaGoal" placeholder="Goal" v-model.number="goal">
         </div>
 
@@ -48,7 +48,7 @@
 
     <template slot="footer" v-if="!editable">
       <div class="card-footer-item">
-        <span>Goal: {{goal | mToMi}}mi</span>
+        <span>Goal: {{goal | mToMi}}mi</span>&nbsp;<span v-if="total > goal" class="mdi mdi-check has-text-success"></span>
       </div>
       <div class="card-footer-item">
         <i class="ti-reload"></i> Updated {{ $store.state.strava.updated }}
@@ -93,6 +93,9 @@
       summary() {
         return this.$store.getters['strava/weeklyDistanceSummary'];
       },
+      loading() {
+        return !this.summary();
+      },
     },
     methods: {
       saveChanges() {
@@ -104,7 +107,10 @@
         this.loadData()
       },
       cancelChanges() {
-
+        let config = JSON.parse(localStorage.getItem('stravaConfig'));
+        this.athleteId = config.athleteId;
+        this.goal = config.goal;
+        this.editable = false;
       },
       loadData() {
         this.$store.dispatch('strava/load', {athleteId: this.athleteId});
@@ -120,9 +126,5 @@
 </script>
 
 <style scoped>
-  .stat-grid {
-    display: flex;
-    justify-content: space-between;
-  }
 
 </style>
