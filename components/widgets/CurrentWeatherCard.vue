@@ -1,5 +1,5 @@
 <template>
-  <bulma-card :loading="loading">
+  <widget-card :loading="loading">
     <template slot="title">Current Weather</template>
     <template slot="titleIcon">
       <span @click="editable=true" :disabled="editable" class="mdi mdi-pencil"></span>
@@ -55,15 +55,15 @@
       </div>
     </template>
 
-  </bulma-card>
+  </widget-card>
 </template>
 
 <script>
-  import BulmaCard from '~/components/UIComponents/Cards/BulmaCard.vue'
+  import WidgetCard from '~/components/WidgetCard.vue'
 
   export default {
     name: "CurrentWeatherCard",
-    components: {BulmaCard},
+    components: {WidgetCard},
     data: function () {
       return {
         lat: null,

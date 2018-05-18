@@ -67,6 +67,10 @@
 </script>
 
 <style scoped>
+  html {
+    background-color: #f4f3ef;
+  }
+
   .main-content {
     padding: 1.5rem;
   }

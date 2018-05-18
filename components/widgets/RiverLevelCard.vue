@@ -1,5 +1,5 @@
 <template>
-  <bulma-card :loading="loading">
+  <widget-card :loading="loading">
     <template slot="title">{{location || 'River Levels'}}</template>
     <template slot="titleIcon">
       <span @click="editable=true" :disabled="editable" class="mdi mdi-pencil"></span>
@@ -56,17 +56,17 @@
       </div>
     </template>
 
-  </bulma-card>
+  </widget-card>
 
 </template>
 
 <script>
-  import BulmaCard from '~/components/UIComponents/Cards/BulmaCard'
+  import WidgetCard from '~/components/WidgetCard'
   import Trend from 'vuetrend'
 
   export default {
     name: "RiverLevelCard",
-    components: {BulmaCard, Trend},
+    components: {WidgetCard, Trend},
     data: function () {
       return {
         editable: false,

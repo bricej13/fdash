@@ -1,5 +1,5 @@
 <template>
-  <bulma-card :loading="$store.state.strava.dataLoaded < 2">
+  <widget-card :loading="$store.state.strava.dataLoaded < 2">
     <template slot="title">Strava Distance</template>
     <template slot="titleIcon">
       <span @click="editable=true" :disabled="editable" class="mdi mdi-pencil"></span>
@@ -54,17 +54,16 @@
         <i class="ti-reload"></i> Updated {{ $store.state.strava.updated }}
       </div>
     </template>
-  </bulma-card>
+  </widget-card>
 
 </template>
 
 <script>
-  import BulmaCard from '~/components/UIComponents/Cards/BulmaCard'
-  import Stat from '~/components/UIComponents/Stat.vue'
+  import WidgetCard from '~/components/WidgetCard'
 
   export default {
     name: "StravaCard",
-    components: {BulmaCard, Stat},
+    components: {WidgetCard},
     data: function () {
       return {
         athleteId: null,

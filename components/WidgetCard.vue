@@ -25,7 +25,7 @@
 
 <script>
   export default {
-    name: "BulmaCard",
+    name: "WidgetCard",
     props: ['loading']
   }
 </script>
