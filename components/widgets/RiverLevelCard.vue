@@ -1,18 +1,53 @@
 <template>
   <bulma-card>
-    <template slot="title">{{location}}</template>
-
-    <template slot="content">
-      <div class="subtitle">7 Day Trend:</div>
-      <trend
-        :data="values7Days"
-        :gradient="['#41B883', '#F3BB45', '#EB5E28']"
-        auto-draw
-        smooth
-      ></trend>
+    <template slot="title">{{location || 'River Levels'}}</template>
+    <template slot="titleIcon">
+      <span @click="editable=true" :disabled="editable" class="mdi mdi-pencil"></span>
     </template>
 
-    <template slot="footer">
+    <template slot="content">
+      <div v-if="!editable">
+        <div class="subtitle">{{days}} Day Trend:</div>
+        <trend
+          :data="values"
+          :gradient="['#41B883', '#F3BB45', '#EB5E28']"
+          auto-draw
+          smooth
+        ></trend>
+      </div>
+
+      <div class="config" v-if="editable">
+        <div class="field">
+          <label class="label" for="siteInput">USGS Site Number</label>
+          <input type="number" class="input" id="siteInput" placeholder="Site Number"
+                 v-model.number="site">
+        </div>
+
+        <div class="field">
+          <label class="label" for="paramCodeInput">Param Code</label>
+          <input type="number" class="input" id="paramCodeInput" placeholder="Param Code" v-model="paramCode">
+        </div>
+
+        <div class="field">
+          <label class="label" for="daysInput">How many days to retrieve history for</label>
+          <input type="number" class="input" id="daysInput" placeholder="Days"
+                 v-model.number="days">
+        </div>
+
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-primary" @click.prevent="saveChanges" :disabled="!site || !paramCode || !days">Done</button>
+          </div>
+          <div class="control" v-if="!firstTimeSetup">
+            <button class="button is-text" @click.prevent="cancelChanges">Cancel</button>
+          </div>
+        </div>
+
+      </div>
+
+    </template>
+
+    <template slot="footer" v-if="!editable">
       <div class="card-footer-item">
         <b>{{value}} </b>&nbsp;<span style="color:#AAA">{{unit}}</span>
       </div>
@@ -32,50 +67,64 @@
   export default {
     name: "RiverLevelCard",
     components: {BulmaCard, Trend},
-    props: {
-      usgsSite: {type: Number}
-    },
     data: function () {
       return {
+        editable: false,
         value: null,
         values: [0],
         measurementDate: null,
         unit: '',
         bodyOfWater: '',
         location: '',
-        site: 13206000,
-        paramCode: '00060',
+        site: null,
+        paramCode: '',
+        days: 7,
         loading: true,
-
+        firstTimeSetup: false
       }
     },
     created: function () {
-      this.loading = true;
-      this.$axios.get(`https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${this.site}&parameterCd=${this.paramCode}&period=P7D&siteStatus=all`)
-        .then(d => {
-          this.location = d.data.value.timeSeries[0].sourceInfo.siteName.split(' AT ')[1];
-          this.unit = d.data.value.timeSeries[0].variable.unit.unitCode;
+      let config = JSON.parse(localStorage.getItem('riverConfig'));
 
-          this.values = d.data.value.timeSeries[0].values[0].value.map(v => Number(v.value));
-
-          this.value = Number(this.values[this.values.length - 1]);
-          this.measurementDate = new Date(d.data.value.timeSeries[0].values[0].value[this.values.length - 1].dateTime);
-
-          this.loading = false;
-        })
+      if (config && config.site && config.paramCode) {
+        this.site = config.site;
+        this.paramCode = config.paramCode;
+        this.days = config.days;
+        this.loadData();
+      }
+      else {
+        this.editable = true;
+        this.firstTimeSetup = true;
+      }
     },
-    computed: {
-      valuesToday() {
-        return this.values.slice(Math.max(0, this.values.length - 95), this.values.length);
+    methods: {
+      saveChanges() {
+        localStorage.setItem('riverConfig', JSON.stringify({
+          site: this.site,
+          paramCode: this.paramCode,
+          days: this.days
+        }));
+        this.editable = false;
+        this.loadData();
       },
-      values7Days() {
-        return this.values.slice(Math.max(0, this.values.length - 95 * 7), this.values.length - 95);
+      cancelChanges() {
+        this.editable = false;
       },
-      valueMax() {
-        return this.values.reduce((acc, cur) => Math.max(acc, cur));
-      },
-      valueMin() {
-        return this.values.reduce((acc, cur) => Math.min(acc, cur));
+      loadData() {
+        this.loading = true;
+        this.$axios.get(`https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${this.site}&parameterCd=${this.paramCode}&period=P${this.days || 1}D&siteStatus=all`)
+          .then(d => {
+            this.location = d.data.value.timeSeries[0].sourceInfo.siteName.split(' AT ')[1];
+            this.unit = d.data.value.timeSeries[0].variable.unit.unitCode;
+
+            this.values = d.data.value.timeSeries[0].values[0].value.map(v => Number(v.value));
+
+            this.value = Number(this.values[this.values.length - 1]);
+            this.measurementDate = new Date(d.data.value.timeSeries[0].values[0].value[this.values.length - 1].dateTime);
+
+            this.loading = false;
+          })
+
       }
     }
   }

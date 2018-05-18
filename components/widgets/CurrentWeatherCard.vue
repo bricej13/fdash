@@ -129,7 +129,6 @@
         }));
         this.editable = false;
         this.loadWeather();
-
       },
       cancelChanges() {
         let config = JSON.parse(localStorage.getItem('weatherConfig'));
