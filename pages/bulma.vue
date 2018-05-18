@@ -11,13 +11,20 @@
     <div class="main-content">
       <div class="columns">
         <div class="column">
-          <RiverLevelCard></RiverLevelCard>
+          <no-ssr>
+            <RiverLevelCard></RiverLevelCard>
+          </no-ssr>
         </div>
         <div class="column">
-          <CurrentWeatherCard :lat="43.6954" :long="-116.354"></CurrentWeatherCard>
+          <no-ssr>
+            <CurrentWeatherCard></CurrentWeatherCard>
+            <!-- :lat="43.6954" :long="-116.354" -->
+          </no-ssr>
         </div>
         <div class="column">
-          <StravaCard :athleteId="12167062"></StravaCard>
+          <no-ssr>
+            <StravaCard></StravaCard>
+          </no-ssr>
         </div>
       </div>
     </div>

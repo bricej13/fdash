@@ -26,27 +26,27 @@
 
         <div class="field">
           <label class="label" for="stravaAthleteId">Athlete Id</label>
-          <input type="number" class="input" id="stravaAthleteId" placeholder="Athlete Id" v-model="local_athleteId">
+          <input type="number" class="input" id="stravaAthleteId" placeholder="Athlete Id" v-model.number="athleteId">
         </div>
 
         <div class="field">
           <label class="label" for="stravaGoal">Weekly Goal (m)</label>
-          <input type="number" class="input" id="stravaGoal" placeholder="Goal" v-model="local_goal">
+          <input type="number" class="input" id="stravaGoal" placeholder="Goal" v-model.number="goal">
         </div>
 
         <div class="field is-grouped">
           <div class="control">
-            <button class="button is-primary" @click.prevent="saveChanges">Done</button>
+            <button class="button is-primary" @click.prevent="saveChanges" :disabled="!athleteId">Done</button>
           </div>
-          <div class="control">
-            <button class="button is-text" @click="editable = false">Cancel</button>
+          <div class="control" v-if="!firstTimeSetup">
+            <button class="button is-text" @click.prevent="cancelChanges">Cancel</button>
           </div>
         </div>
 
       </div>
     </template>
 
-    <template slot="footer">
+    <template slot="footer" v-if="!editable">
       <div class="card-footer-item">
         <span>Goal: {{goal | mToMi}}mi</span>
       </div>
@@ -56,53 +56,6 @@
     </template>
   </bulma-card>
 
-  <!--
-  <div class="card">
-    <div class="header">
-      <slot name="title">
-        <h4 class="title">Strava Distance</h4>
-      </slot>
-      <p class="category">
-        <slot name="subTitle">Weekly total: {{ total | mToMi }}mi <span v-if="total > goal">✔️</span></slot>
-      </p>
-    </div>
-    <div class="content" slot="content">
-      <div class="stat-grid">
-        <stat name="Run" :value="summary.Run | mToMi" unit="mi" v-if="summary.Run"></stat>
-        <stat name="Ride" :value="summary.Ride | mToMi" unit="mi" v-if="summary.Ride"></stat>
-        <stat name="Swim" :value="summary.Swim | mToMi" unit="m" v-if="summary.Swim"></stat>
-      </div>
-
-      <div class="config">
-        <div @click="editable=true" v-if="!editable">edit</div>
-        <form v-if="editable">
-          <div class="form-group">
-            <label for="stravaAthleteId">Athlete Id</label>
-            <input type="number" class="form-control" id="stravaAthleteId" placeholder="Athlete Id"
-                   v-model="local_athleteId">
-
-            <label for="stravaGoal">Weekly Goal (m)</label>
-            <input type="number" class="form-control" id="stravaGoal" placeholder="Goal" v-model="local_goal">
-
-            <button class="btn btn-link" @click="saveChanges">Done</button>
-          </div>
-
-        </form>
-      </div>
-
-      <div class="footer">
-        <hr>
-        <div class="stats">
-          <slot name="footer">
-            <i class="ti-reload"></i> Updated {{ $store.state.strava.updated }}
-          </slot>
-        </div>
-        <div class="pull-right">
-        </div>
-      </div>
-    </div>
-  </div>
-  -->
 </template>
 
 <script>
@@ -112,20 +65,25 @@
   export default {
     name: "StravaCard",
     components: {BulmaCard, Stat},
-    props: {
-      athleteId: {type: Number},
-      goal: {type: Number},
-    },
     data: function () {
       return {
-        local_goal: this.goal,
-        local_athleteId: this.athleteId,
-        editable: false
+        athleteId: null,
+        goal: null,
+        editable: false,
+        firstTimeSetup: false
       }
     },
     created: function () {
-      if (this.athleteId) {
-        this.loadData(this.athleteId);
+      let config = JSON.parse(localStorage.getItem('stravaConfig'));
+
+      if (config && config.athleteId) {
+        this.athleteId = config.athleteId;
+        this.goal = config.goal;
+        this.loadData();
+      }
+      else {
+        this.firstTimeSetup = true;
+        this.editable = true;
       }
     },
     computed: {
@@ -138,15 +96,18 @@
     },
     methods: {
       saveChanges() {
+        localStorage.setItem('stravaConfig', JSON.stringify({
+          athleteId: this.athleteId,
+          goal: this.goal
+        }));
         this.editable = false;
-        this.$emit('config-changes', {
-          goal: Number(this.local_goal),
-          athleteId: Number(this.local_athleteId)
-        });
-        this.loadData(this.local_athleteId)
+        this.loadData()
       },
-      loadData(athleteId) {
-        this.$store.dispatch('strava/load', {athleteId: athleteId});
+      cancelChanges() {
+
+      },
+      loadData() {
+        this.$store.dispatch('strava/load', {athleteId: this.athleteId});
       }
     },
     filters: {

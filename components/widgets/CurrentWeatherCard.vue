@@ -29,20 +29,20 @@
         <div class="field">
           <label class="label" for="currentWeatherLat">Latitude</label>
           <input type="number" class="input" id="currentWeatherLat" placeholder="lat"
-                 v-model="local_lat">
+                 v-model.number="lat">
         </div>
 
         <div class="field">
           <label class="label" for="currentWeatherLong">Longitude</label>
-          <input type="number" class="input" id="currentWeatherLong" placeholder="long" v-model="local_long">
+          <input type="number" class="input" id="currentWeatherLong" placeholder="long" v-model.number="long">
         </div>
 
         <div class="field is-grouped">
           <div class="control">
-            <button class="button is-primary" @click.prevent="saveChanges">Done</button>
+            <button class="button is-primary" @click.prevent="saveChanges" :disabled="!lat || !long">Done</button>
           </div>
-          <div class="control">
-            <button class="button is-text" @click="editable = false">Cancel</button>
+          <div class="control" v-if="!firstTimeSetup">
+            <button class="button is-text" @click.prevent="cancelChanges">Cancel</button>
           </div>
         </div>
 
@@ -50,7 +50,7 @@
     </template>
 
 
-    <template slot="footer">
+    <template slot="footer" v-if="!editable">
       <div class="card-footer-item has-text-grey">
         <i class=""></i> {{ ($store.state.weather.minutely || $store.state.weather.hourly).summary }}
       </div>
@@ -60,29 +60,32 @@
 </template>
 
 <script>
-  import StatsCard from '~/components/UIComponents/Cards/StatsCard.vue'
   import BulmaCard from '~/components/UIComponents/Cards/BulmaCard.vue'
 
   export default {
     name: "CurrentWeatherCard",
-    components: {StatsCard, BulmaCard},
-    props: {
-      lat: {type: Number},
-      long: {type: Number}
-    },
+    components: {BulmaCard},
     data: function () {
       return {
-        local_lat: this.lat,
-        local_long: this.long,
-        editable: false
+        lat: null,
+        long: null,
+        editable: false,
+        firstTimeSetup: false
       }
     },
     created: function () {
-      if (this.lat && this.long) {
-        this.loadWeather(this.lat, this.long);
-      } else {
-        this.editable = true
+      let config = JSON.parse(localStorage.getItem('weatherConfig'));
+
+      if (config && config.lat && config.long) {
+        this.lat = config.lat;
+        this.long = config.long;
+        this.loadWeather();
       }
+      else {
+        this.editable = true;
+        this.firstTimeSetup = true;
+      }
+
     },
     computed: {
       loading() {
@@ -120,15 +123,22 @@
     },
     methods: {
       saveChanges() {
+        localStorage.setItem('weatherConfig', JSON.stringify({
+          lat: this.lat,
+          long:this.long
+        }));
         this.editable = false;
-        this.$emit('config-changes', {
-          lat: Number(this.local_lat),
-          long: Number(this.local_long)
-        });
-        this.loadWeather(this.local_lat, this.local_long);
+        this.loadWeather();
+
       },
-      loadWeather(lat, long) {
-        this.$store.dispatch('weather/load', {lat: lat, long: long});
+      cancelChanges() {
+        let config = JSON.parse(localStorage.getItem('weatherConfig'));
+        this.lat = config.lat;
+        this.long = config.long;
+        this.editable = false;
+      },
+      loadWeather() {
+        this.$store.dispatch('weather/load', {lat: this.lat, long: this.long});
       }
     },
     filters: {
