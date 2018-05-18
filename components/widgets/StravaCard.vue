@@ -1,5 +1,5 @@
 <template>
-  <widget-card :loading="$store.state.strava.dataLoaded < 2">
+  <widget-card :loading="loading">
     <template slot="title">Strava Distance</template>
     <template slot="titleIcon">
       <span @click="editable=true" :disabled="editable" class="mdi mdi-pencil"></span>
@@ -93,7 +93,7 @@
         return this.$store.getters['strava/weeklyDistanceSummary'];
       },
       loading() {
-        return !this.summary();
+        return this.$store.state.strava.dataLoaded < 2 && !this.firstTimeSetup
       },
     },
     methods: {

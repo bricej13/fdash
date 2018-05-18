@@ -79,7 +79,7 @@
         site: null,
         paramCode: '',
         days: 7,
-        loading: true,
+        loading: false,
         firstTimeSetup: false
       }
     },
