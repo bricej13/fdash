@@ -1,3 +1,6 @@
+@import "mixins/_variables";
+@import "mixins/_chartist";
+
 @mixin ct-responsive-svg-container($width: 100%, $ratio: $ct-container-ratio) {
   display: block;
   position: relative;

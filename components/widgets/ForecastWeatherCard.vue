@@ -1,31 +1,35 @@
 <template>
-  <chart-card :chart-data="chartConfig.data" :chart-options="chartConfig.options" :data-loaded="dataLoaded">
-    <h4 slot="title" class="title">Weekly Forecast</h4>
+  <widget-card>
 
-    <span slot="subTitle">{{ $store.state.weather.daily.summary }}</span>
+    <template slot="title">Weekly Forecast</template>
 
-    <div slot="legend">
-      <i class="fa fa-circle text-danger"></i> High
-      <i class="fa fa-circle text-warning"></i> Low
-      <i class="fa fa-circle text-success"></i> Current
-      <i class="fa fa-circle text-info"></i> Precipitation %
-    </div>
+    <template slot="content">
+      <chart :chart-data="chartConfig.data" :chart-options="chartConfig.options" :data-loaded="dataLoaded" aspect-ratio="ct-double-octave"></chart>
 
-    <span slot="footer">
-      <i class="ti-reload"></i> {{ $store.state.weather.updated }}
-    </span>
+    </template>
 
-  </chart-card>
+    <template slot="footer" v-if="!editable">
+      <div class="card-footer-item has-text-grey">
+        <i class=""></i> {{ ($store.state.weather.daily || $store.state.weather.hourly).summary }}
+      </div>
+    </template>
+
+  </widget-card>
+
 </template>
 
 <script>
   import ChartCard from '~/components/UIComponents/Cards/ChartCard.vue'
+  import Chart from '~/components/Chart.vue'
+  import WidgetCard from '~/components/WidgetCard'
+
   export default {
     name: "ForecastWeatherCard",
-    components: {ChartCard},
-    props: {
-      lat: { type: Number },
-      long: { type: Number }
+    components: {ChartCard, WidgetCard, Chart},
+    data: function () {
+      return {
+        editable: false
+      }
     },
     computed: {
       dataLoaded() {

@@ -23,6 +23,7 @@ module.exports = {
   */
   loading: {color: '#3B8070'},
   plugins: [
+    {src: '~/plugins/charts', ssr: false},
   ],
   modules: [
     '@nuxtjs/axios',

@@ -4,5 +4,6 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
+  @import "../assets/sass/chartist";
 </style>
