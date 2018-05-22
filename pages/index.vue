@@ -38,6 +38,14 @@
       <div class="columns">
         <div class="column">
           <no-ssr>
+            <CalendarCard></CalendarCard>
+          </no-ssr>
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="column">
+          <no-ssr>
             <PlanesOverheadCard></PlanesOverheadCard>
           </no-ssr>
         </div>

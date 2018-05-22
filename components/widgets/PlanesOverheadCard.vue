@@ -43,7 +43,7 @@
         loading: true,
         lat: null,
         long: null,
-        dist: 100,
+        dist: 50,
         error: ''
       }
     },
@@ -63,7 +63,7 @@
         );
       },
       loadPlanes() {
-        if (this.lat && this.long && this.dist) {
+        if (this.lat && this.long && this.dist && !window.hidden) {
           this.$axios.get(`/planes?lat=${this.lat}&long=${this.long}&dist=${this.dist}`)
             .then(d => {
                 this.planes = d.data.acList.filter(p => !p.Gnd);

@@ -7,9 +7,13 @@
 
     <template slot="content">
 
-      <div class="columns" v-if="!editable">
+      <div class="columns is-mobile" v-if="!editable">
 
-        <div class="column is-two-thirds">
+        <div class="column is-size-1">
+          {{ $store.state.weather.current.temperature | round }}<span class="is-size-4 has-text-grey"> F</span>
+        </div>
+
+        <div class="column">
           <div class="is-size-1">
             <i class="wi" :class="weatherIcon"></i>
           </div>
@@ -18,8 +22,25 @@
           </div>
         </div>
 
-        <div class="column has-text-right is-size-1">
-          {{ $store.state.weather.current.temperature | round }}<span class="is-size-4 has-text-grey"> F</span>
+        <div class="column" v-if="$store.state.weather.current">
+          <div>
+            UV
+            <trend
+              :data="uvData"
+              :gradient="['#41B883', '#F3BB45', '#EB5E28']"
+              auto-draw
+              smooth
+            ></trend>
+          </div>
+          <div>
+            <i class="wi wi-humidity"></i>
+            {{ $store.state.weather.current.humidity * 100 }}%
+          </div>
+          <div>
+            UV Index
+            <chart :chart-data="uvChart.data" :chart-options="uvChart.config" chart-type="Pie" :data-loaded="true"
+                   aspect-ratio="ct-square"></chart>
+          </div>
         </div>
 
       </div>
@@ -60,16 +81,18 @@
 
 <script>
   import WidgetCard from '~/components/WidgetCard.vue'
+  import Chart from '~/components/Chart.vue'
+  import Trend from 'vuetrend'
 
   export default {
     name: "CurrentWeatherCard",
-    components: {WidgetCard},
+    components: {WidgetCard, Trend, Chart},
     data: function () {
       return {
         lat: null,
         long: null,
         editable: false,
-        firstTimeSetup: false
+        firstTimeSetup: false,
       }
     },
     created: function () {
@@ -118,13 +141,35 @@
           default:
             return 'na'
         }
+      },
+      uvData() {
+        return this.$store.state.weather.hourly.data
+          ? this.$store.state.weather.hourly.data.map(h => h.uvIndex)
+          : [];
+      },
+      uvChart() {
+        let uvIndex = this.$store.state.weather.current.uvIndex || 0;
+
+        return {
+          data:
+            {
+              series: [uvIndex,  10-uvIndex]
+            },
+          config: {
+            donut: true,
+            donutWidth: 20,
+            startAngle: 270,
+            total: 20,
+            showLabel: false,
+          }
+        }
       }
     },
     methods: {
       saveChanges() {
         localStorage.setItem('weatherConfig', JSON.stringify({
           lat: this.lat,
-          long:this.long
+          long: this.long
         }));
         this.editable = false;
         this.loadWeather();

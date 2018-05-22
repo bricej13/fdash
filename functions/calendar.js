@@ -1,7 +1,6 @@
 import axios from 'axios'
 import IcalExpander from 'ical-expander'
-import ical from 'ical.js'
-import {addDays, differenceInMinutes} from 'date-fns'
+import {addDays, differenceInMinutes, startOfDay, endOfDay} from 'date-fns'
 
 exports.handler = function (event, context, callback) {
   // axios.get(`https://p23-calendars.icloud.com/published/2/RVWJttFSuClm_aQYlt1JE2USOW1nNAVX6lW0TGvjmMyFGCWNrCWtk-ybiJJLV4gkBYw6M8h_qdqTLhLLvD_n0lVcigVrlxOhsHZ1xzNNzBQ`) // Family Calendar
@@ -9,7 +8,8 @@ exports.handler = function (event, context, callback) {
     .then(d => {
 
       const icalExpander = new IcalExpander({ics: d.data, maxIterations: 100});
-      const events = icalExpander.between(addDays(new Date(), -3), addDays(new Date(), 3));
+
+      const events = icalExpander.between(startOfDay(new Date()), endOfDay(addDays(new Date(), 4)));
 
       const mappedEvents = events.events.map(e => ({
         start: e.startDate.toString(),

@@ -1,53 +1,59 @@
 <template>
+  <widget-card>
+    <template slot="title">Weekly Calendar</template>
+    <template slot="titleIcon">
+      <span @click="editable=true" :disabled="editable" class="mdi mdi-pencil"></span>
+    </template>
 
-  <div class="card">
-    <div class="header">
-      <slot name="title">
-        <h4 class="title">Weekly Calendar</h4>
-      </slot>
-      <p class="category">
-        <slot name="subTitle">Weekly goal:</slot>
-      </p>
-    </div>
-    <div class="content" slot="content">
+    <template slot="content">
+      <div class="columns is-1 is-variable calendar">
+        <div class="column" v-for="day in days" :key="day.date.toString()">
+          <div class="" :class="{'is-primary': isSameDay(day.date, new Date())}">
+            <div class="message-header">
+              <div>{{ day.date | dayName }}</div>
+              <div>{{ day.date | dateName }}</div>
+            </div>
 
-      <div class="calendar-wrapper">
-        <div class="calendar-day" v-for="day in days" :key="day.date.toString()"
-             :class="{today: isSameDay(day.date, new Date())}">
-          <div class="day-header">
-            {{ day.date | dayName }}
-          </div>
-          <div class="calendar-event" v-for="event in day.events" :key="event.uid">
-            <div class="event-header">{{ event.summary }}</div>
-            <div>{{ event | durationDescription }}</div>
+            <div class="">
 
+              <div class="box" v-for="event in day.events" :key="event.uid" >
+                <div>{{ event.summary }}</div>
+                <div>{{ event | durationDescription }}</div>
+              </div>
+
+              <div v-if="day.events.length === 0" class="has-text-centered is-italic has-text-grey">
+                No events
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="footer">
-        <div class="stats">
-          <slot name="footer">
-            <i class="ti-reload"></i> What goes here?
-          </slot>
-        </div>
+      <div class="config" v-if="editable">
       </div>
 
-    </div>
-  </div>
+    </template>
 
+  </widget-card>
 
 </template>
 
 <script>
   import StatsCard from '~/components/UIComponents/Cards/StatsCard.vue'
+  import WidgetCard from '~/components/WidgetCard.vue'
   import {format, isSameDay} from 'date-fns'
 
   export default {
     name: "CalendarCard",
-    components: {StatsCard},
+    components: {StatsCard, WidgetCard},
     props: {
-      calendars: { type: Array }
+      calendars: {type: Array}
+    },
+    data: function () {
+      return {
+        editable: false
+      }
     },
     created: function () {
       this.$store.dispatch('calendar/load');
@@ -64,7 +70,10 @@
     },
     filters: {
       dayName(val) {
-        return isSameDay(new Date(), val) ? "Today" : format(val, "MMM Do")
+        return isSameDay(new Date(), val) ? "Today" : format(val, "ddd")
+      },
+      dateName(val) {
+        return format(val, "MMM Do")
       },
       durationDescription(event) {
         if (event.allDay) return "All day";
@@ -76,37 +85,8 @@
 </script>
 
 <style scoped>
-  .calendar-wrapper {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .calendar-day {
-    flex-grow: 1;
-    flex-basis: 0;
-    border: 1px solid #a9a9a9;
-  }
-
-  .calendar-day.today {
-    background-color: rgba(104, 179, 200, .2);
-  }
-
-  .calendar-day .day-header {
-    font-weight: bold;
-    border-bottom: 1px solid #a9a9a9;
-    text-align: center;
+  .calendar .message-body {
     padding: 3px;
-  }
-
-  .calendar-event {
-    background-color: rgba(65, 184, 131, .75);;
-    margin-bottom: 5px;
-    padding: 3px;
-
-  }
-
-  .calendar-event .event-header {
-    font-weight: bold;
   }
 
 </style>
