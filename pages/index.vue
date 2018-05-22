@@ -37,7 +37,9 @@
 
       <div class="columns">
         <div class="column">
-          <PlanesOverheadCard></PlanesOverheadCard>
+          <no-ssr>
+            <PlanesOverheadCard></PlanesOverheadCard>
+          </no-ssr>
         </div>
         <div class="column">
           <ForecastWeatherCard></ForecastWeatherCard>
@@ -54,7 +56,6 @@
     - Astrology i guess
     - Recent Earthquakes
     - Planes overhead (https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?lat=43.6954&lng=-116.354&fDstL=0&fDstU=50)
-    - spacex
     - Pregnancy Tracker
     - Air Quality
     - Ski Resort Snow
