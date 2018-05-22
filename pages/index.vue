@@ -26,7 +26,6 @@
         <div class="column">
           <no-ssr>
             <CurrentWeatherCard></CurrentWeatherCard>
-            <!-- :lat="43.6954" :long="-116.354" -->
           </no-ssr>
         </div>
         <div class="column">
@@ -35,7 +34,33 @@
           </no-ssr>
         </div>
       </div>
+
+      <div class="columns">
+        <div class="column">
+          <PlanesOverheadCard></PlanesOverheadCard>
+        </div>
+        <div class="column">
+          <ForecastWeatherCard></ForecastWeatherCard>
+        </div>
+      </div>
     </div>
+
+    <!--
+    TODOs:
+    - News Chiron
+    - Inspiration Quotes/scripture
+    - Upcoming space launches (https://launchlibrary.net/docs/1.3/api.html)
+    - Astronomical Events
+    - Astrology i guess
+    - Recent Earthquakes
+    - Planes overhead (https://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?lat=43.6954&lng=-116.354&fDstL=0&fDstU=50)
+    - spacex
+    - Pregnancy Tracker
+    - Air Quality
+    - Ski Resort Snow
+    - Trello board?
+    https://github.com/toddmotto/public-apis
+    -->
 
   </div>
 

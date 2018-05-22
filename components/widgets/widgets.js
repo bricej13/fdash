@@ -3,3 +3,5 @@ export {default as CurrentWeatherCard} from '~/components/widgets/CurrentWeather
 export {default as ForecastWeatherCard} from '~/components/widgets/ForecastWeatherCard'
 export {default as RiverLevelCard} from '~/components/widgets/RiverLevelCard'
 export {default as StravaCard} from '~/components/widgets/StravaCard'
+export {default as ShouldIRideCard} from '~/components/widgets/ShouldIRideCard'
+export {default as PlanesOverheadCard} from '~/components/widgets/PlanesOverheadCard'
