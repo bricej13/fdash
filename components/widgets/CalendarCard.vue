@@ -16,8 +16,8 @@
 
             <div class="">
 
-              <div class="box" v-for="event in day.events" :key="event.uid" >
-                <div>{{ event.summary }}</div>
+              <div class="event" v-for="event in day.events" :key="event.uid" >
+                <div class="has-text-weight-bold">{{ event.summary }}</div>
                 <div>{{ event | durationDescription }}</div>
               </div>
 
@@ -84,9 +84,17 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss">
+  @import "../../assets/sass/mixins/_variables.scss";
+
   .calendar .message-body {
     padding: 3px;
+  }
+  .event {
+    margin: .25rem 0;
+    padding: 0 3px;
+    border-left: 5px solid $success-color;
+    background-color: $success-input-bg;
   }
 
 </style>

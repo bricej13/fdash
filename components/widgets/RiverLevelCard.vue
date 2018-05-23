@@ -7,7 +7,7 @@
 
     <template slot="content">
       <div v-if="!editable">
-        <div class="subtitle">{{days}} Day Trend:</div>
+        <div class="">{{days}} Day Trend:</div>
         <trend
           :data="values"
           :gradient="['#41B883', '#F3BB45', '#EB5E28']"

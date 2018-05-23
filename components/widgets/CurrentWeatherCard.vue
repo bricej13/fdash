@@ -9,11 +9,11 @@
 
       <div class="columns is-mobile" v-if="!editable">
 
-        <div class="column is-size-1">
+        <div class="column is-size-1 has-text-centered">
           {{ $store.state.weather.current.temperature | round }}<span class="is-size-4 has-text-grey"> F</span>
         </div>
 
-        <div class="column">
+        <div class="column has-text-centered">
           <div class="is-size-1">
             <i class="wi" :class="weatherIcon"></i>
           </div>
@@ -22,6 +22,7 @@
           </div>
         </div>
 
+        <!--
         <div class="column" v-if="$store.state.weather.current">
           <div>
             UV
@@ -42,6 +43,7 @@
                    aspect-ratio="ct-square"></chart>
           </div>
         </div>
+        -->
 
       </div>
 
