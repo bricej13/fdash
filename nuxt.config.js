@@ -7,16 +7,28 @@ module.exports = {
     base: '/'
   },
   head: {
-    title: 'vue-paper-dashboard-nuxt',
+    title: 'Family Dashboard',
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-      {hid: 'description', name: 'description', content: 'Nuxt.js project'}
+      {hid: 'description', name: 'description', content: 'Dashboard for the most important things.'}
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
       {rel: 'stylesheet', href: "/css/weather-icons.min.css"},
     ]
+  },
+  meta: {
+    mobileAppIOS: true,
+    name: 'F-Dash',
+    author: 'Brice Johnson'
+  },
+  manifest: {
+    name: 'Family Dashboard',
+    short_name: 'F-Dash',
+    lang: 'en',
+    display: 'standalone',
+    start_url: '/'
   },
   /*
   ** Customize the progress bar color
