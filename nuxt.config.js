@@ -39,6 +39,7 @@ module.exports = {
   ],
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/pwa',
     'nuxt-buefy'
   ],
   axios: {},
