@@ -4,5 +4,3 @@
     command = "cd functions && npm install && cd .. && netlify-lambda build functions && npm run generate"
 
 
-[context.production]
-    environment = { API_URL_BROWSER = "https://johnson-family-dashboard.netlify.com/.netlify/functions/", API_URL = "https://johnson-family-dashboard.netlify.com/.netlify/functions/" }
