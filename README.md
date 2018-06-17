@@ -1,3 +1,8 @@
+## To build
+Step 1: `npm install` or `yarn install`  
+Step 2: `netlify-lambda serve functions`  
+Step 3: In a separate console, run `npm run dev`  
+
 ## Custom widgets
 You can easily add custom widgets in 2 easy steps.
 Step 1: Add your new component to the `components/Widgets` directory.
