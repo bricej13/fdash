@@ -42,7 +42,9 @@ module.exports = {
     '@nuxtjs/pwa',
     'nuxt-buefy'
   ],
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:9000'
+  },
   /*
   ** Build configuration
   */
